@@ -1,0 +1,112 @@
+def show_menu():
+    """Отображает меню программы."""
+    print("\n=== ЧИТАТЕЛЬСКИЙ ДНЕВНИК ===")
+    print("1 — Добавить книгу")
+    print("2 — Показать все книги")
+    print("3 — Показать последние 5 прочитанных")
+    print("4 — Заменить название по номеру")
+    print("5 — Поиск по названию")
+    print("6 — Статистика")
+    print("0 — Выход")
+
+
+def add_books():
+    books = input("Введите название книги: ").strip()
+    return books
+
+
+def show_books(books):
+    print(f"Полный список книг: {books}")
+
+
+def show_latest_books(books):
+    print(f"Последние 5 прочитанных книг: {books[-5:]}")
+
+
+def replace_book(books):
+    idx = input("Введите номер книги для замены: ").strip()
+    if not idx.isdigit():
+        print("Ошибка: номер должен быть числом.")
+        return
+    idx = int(idx)
+    if idx < 1 or idx > len(books):
+        print("Ошибка: такого номера нет в списке.")
+        return
+    new_title = input("Введите новое название: ").strip()
+    if not new_title:
+        print("Ошибка: название не может быть пустым.")
+        return
+    books[idx - 1] = new_title
+    print("Название успешно заменено.")
+
+
+def search_books(books):
+    query = input("Введите слово или часть названия: ").strip().lower()
+    if not query:
+        print("Ошибка: запрос не может быть пустым.")
+        return
+    found = []
+    i = 1
+    for title in books:
+        if query in title.lower():
+            found.append(f"{i}. {title}")
+        i += 1
+    if found:
+        print("Найдено:")
+        for line in found:
+            print(line)
+    else:
+        print("Ничего не найдено.")
+
+
+def stats_books(books):
+    total = len(books)
+    first = books[0] if books else "—"
+    last = books[-1] if books else "—"
+    print(f"Всего прочитано: {total}")
+    print(f"Первая книга: {first}")
+    print(f"Последняя книга: {last}")
+
+
+books = []
+while True:
+    show_menu()
+    operation = input("Введите нужную операцию: ").strip()
+    if operation == "1":
+        title = add_books()
+        if title:
+            books.append(title)
+            print("Книга успешно добавлена!")
+        else:
+            print("Ошибка: название не может быть пустым.")
+    elif operation == "2":
+        if not books:
+            print("Дневник пуст")
+        else:
+            show_books(books)
+    elif operation == "3":
+        if not books:
+            print("Дневник пуст")
+        else:
+            show_latest_books(books)
+    elif operation == "4":
+        if not books:
+            print("Дневник пуст")
+        else:
+            replace_book(books)
+    elif operation == "5":
+        if not books:
+            print("Дневник пуст")
+        else:
+            search_books(books)
+    elif operation == "6":
+        if not books:
+            print("Дневник пуст")
+        else:
+            stats_books(books)
+    elif operation == "0":
+        print("Программа завершена")
+        break
+    else:
+        print("Ошибка: неизвестная операция. Выберите пункт из меню.")
+        
