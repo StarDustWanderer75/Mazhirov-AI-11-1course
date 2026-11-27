@@ -10,11 +10,11 @@ print("Я загадал число от 1 до 100. Попробуй угада
 
 while True:
 
+    try:
+        user_input = int(input("Твоё предложение: "))
 
-    user_input = input("Твоё предложение: ")
 
-
-    if not user_input.isdigit():
+    except ValueError:
         print("Пожалуйста, введите только целые числа.")
         continue
 
